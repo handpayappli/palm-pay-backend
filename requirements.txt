@@ -1,0 +1,8 @@
+flask
+gunicorn
+qdrant-client
+mediapipe
+tensorflow-cpu
+opencv-python-headless
+requests
+numpy

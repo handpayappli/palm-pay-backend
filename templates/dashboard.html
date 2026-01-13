@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>HandPay Central Bank</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; }
+        
+        /* En-tête */
+        header { background: linear-gradient(135deg, #00C851 0%, #007E33 100%); color: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 24px; }
+        .live-badge { background: rgba(255,255,255,0.2); padding: 5px 15px; border-radius: 20px; font-size: 12px; display: flex; align-items: center; }
+        .dot { height: 10px; width: 10px; background-color: #ff4444; border-radius: 50%; margin-right: 8px; animation: blink 1s infinite; }
+        
+        /* Table */
+        .card { background: white; margin-top: 20px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
+        table { width: 100%; border-collapse: collapse; }
+        th { background: #f8f9fa; color: #666; font-weight: 600; text-align: left; padding: 15px; border-bottom: 2px solid #eee; }
+        td { padding: 15px; border-bottom: 1px solid #eee; color: #333; }
+        tr:hover { background-color: #f8f9fa; transition: 0.2s; }
+        
+        /* Argent */
+        .balance { font-weight: bold; color: #2e7d32; font-size: 16px; }
+        .balance.low { color: #cc0000; }
+        
+        /* Animation */
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <div>
+            <h1>✋ HandPay Dashboard</h1>
+            <small>Administration Centrale</small>
+        </div>
+        <div class="live-badge"><div class="dot"></div> LIVE DATA</div>
+    </header>
+
+    <div class="card">
+        <table id="usersTable">
+            <thead>
+                <tr>
+                    <th>CLIENT</th>
+                    <th>SOLDE ACTUEL</th>
+                    <th>STATUT</th>
+                    <th>ID TOKEN</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Les clients vont s'afficher ici -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // Cette fonction tourne toutes les 1 secondes
+    async function updateDashboard() {
+        try {
+            const response = await fetch('/api/users');
+            const users = await response.json();
+            
+            const tbody = document.querySelector("#usersTable tbody");
+            tbody.innerHTML = ""; // On vide la table
+
+            users.forEach(user => {
+                let colorClass = user.balance < 5 ? "low" : "";
+                
+                let row = `
+                    <tr>
+                        <td style="font-weight:bold;">${user.name}</td>
+                        <td class="balance ${colorClass}">${user.balance.toFixed(2)} €</td>
+                        <td><span style="background:#e8f5e9; color:#2e7d32; padding:3px 10px; border-radius:10px; font-size:12px;">ACTIF</span></td>
+                        <td style="font-family:monospace; color:#888;">${user.id.substring(0, 8)}...</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error("Erreur de chargement", error);
+        }
+    }
+
+    // Lancer la mise à jour automatique
+    setInterval(updateDashboard, 1000); // Toutes les 1000ms (1 seconde)
+    updateDashboard();
+</script>
+
+</body>
+</html>
