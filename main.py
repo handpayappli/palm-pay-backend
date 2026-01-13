@@ -24,7 +24,7 @@ app = Flask(__name__)
 QDRANT_URL = "https://d7341f89-12dc-4343-a4b2-09d286409eed.europe-west3-0.gcp.cloud.qdrant.io" 
 
 # Colle ta Clé API Secrète ici :
-QDRANT_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.HyPB5ahmC7Z0BtS48cGx09AmO6taBVcVpewliHDtVjwy_fr0m_qdrant_cloud"
+QDRANT_API_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.l5HDaWwgx88jGSPwGKrMpXDQFhKXMqSYa5vipQtUuEk"
 
 # Nom de la collection
 COLLECTION_NAME = "palm_pay_prod"
