@@ -1,8 +1,8 @@
-flask
-gunicorn
-qdrant-client
-mediapipe
-tensorflow-cpu
-opencv-python-headless
-requests
-numpy
+Flask==3.0.0
+gunicorn==21.2.0
+qdrant-client==1.7.0
+mediapipe==0.10.9
+tensorflow-cpu==2.15.0
+opencv-python-headless==4.9.0.80
+requests==2.31.0
+numpy==1.26.2
